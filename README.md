@@ -1,8 +1,16 @@
 # FastAPI-Mongoengine
 this repo is a CRUD server using FastAPI, mongodb, and docker. 
+## System requirements
+ - python 3.7 or latest: [python](https://www.python.org/)
+ - docker: [docker](https://docs.docker.com/engine/install/)
+ - poetry: [python poetry](https://python-poetry.org/docs/#installation)
 ## Setup environment
 follow this guide to install
-  * Clone the repo: ```git clone https://github.com/coreui/coreui-react.git```
+  * install [python](https://www.python.org/)
+  * install [docker](https://docs.docker.com/engine/install/) (highly recommend install docker desktop version)
+  * install [poetry](https://python-poetry.org/docs/#installation) in your terminal
+  * Clone the repo: ```git clone https://github.com/AlifvianM/FastAPI-Mongoengine.git``` then ```cd FastApi-Mongoengine```
+  * type ```poetry config virtualenvs.in-project true```. this command will create a virtualenv in your working folder
   * install with poetry : ```poetry install```
   
  ## Run Server 
