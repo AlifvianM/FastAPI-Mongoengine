@@ -1,72 +1,79 @@
-from fastapi import FastAPI, Query
-from app.models.item import Item, UpdatedItem
-from app.models.user import UserIn, UserOut
-from app.models.db import Items, items_coll
+import fastapi
+from models.item import Item, UpdatedItem
+from models.db import Items, items_coll
 from typing import List, Optional
 
-app = FastAPI()
+app = fastapi.FastAPI()
 
 fake_items_db = [{"item_name": "Foo"}, {"item_name": "Bar"}, {"item_name": "Baz"}]
+
 
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
 
+
 @app.post("/add-data/")
 async def post_item(item: Item):
     item = item.dict()
     data = Items(
-        name=item["name"], 
-        description=item["description"], 
-        price=item["price"], 
-        tax=item["tax"])
+        name=item["name"],
+        description=item["description"],
+        price=item["price"],
+        tax=item["tax"],
+    )
     data.save()
-    return {"msg":"Success", "data":item}
+    return {"msg": "Success", "data": item}
+
 
 @app.get("/items/")
 async def get_all_item():
     items = [i.name for i in Items.objects]
-    return {"msg":"Success", "data":items}
+    return {"msg": "Success", "data": items}
 
-@app.get("/items/{items_name}")
-async def get_item(items_name: str):
-    item = Items.objects.get(name=items_name)
+
+@app.get("/items/{id}")
+async def get_item(id: str):
+    item = Items.objects.get(id=id)
     data = {
-        "name":item.name,
-        "description":item.description,
-        "price":item.price,
-        "tax":item.tax
+        "name": item.name,
+        "description": item.description,
+        "price": item.price,
+        "tax": item.tax,
     }
-    return {"msg":"Success", "data":data}
+    return {"msg": "Success", "data": data}
 
-@app.delete("/items/{items_name}")
-async def get_item(items_name: str):
-    item = Items.objects.get(name=items_name)
+
+@app.delete("/items/{id}")
+async def get_item(id: str):
+    item = Items.objects.get(id=id)
     item_name = item.name
     item.delete()
-    return {"msg":"item {} has been deleted".format(item_name)}
+    return {"msg": "item {} has been deleted".format(item_name)}
 
-@app.put("/items/{items_name}")
-async def update_item(items: UpdatedItem, items_name: str):
-    item = Items.objects.get(name=items_name)
+
+@app.put("/items/{id}")
+async def update_item(items: UpdatedItem, id: str):
+    item = Items.objects.get(id=id)
     print("ITEM : ", items.price)
     if item:
         item.update(
-            name=items.name if items.name else items_name,
+            name=items.name if items.name else item.name,
             description=items.description,
             price=items.price,
             tax=items.tax
             # **items.dict()
         )
         data = {
-            "name":item.name,
-            "description":item.description,
-            "price":item.price,
-            "tax":item.tax
+            "name": item.name,
+            "description": item.description,
+            "price": item.price,
+            "tax": item.tax,
         }
         return data
     else:
         return False
+
 
 # @app.get("/items/")
 # async def read_items(q : Optional[List[str]] = Query(None)):

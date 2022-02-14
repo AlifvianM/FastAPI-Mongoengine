@@ -10,10 +10,10 @@ items_coll = client.get_database("mongodb").list_collection_names()
 #     tax: Optional[float] = None
 #     tags: List[str] = []
 
+
 class Items(Document):
     name = StringField(max_length=200)
     description = StringField(max_length=200, required=False)
     price = FloatField(required=False)
     tax = FloatField(required=False)
     date_modified = DateTimeField(default=datetime.datetime.utcnow)
-
