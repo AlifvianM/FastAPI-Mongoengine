@@ -1,6 +1,6 @@
 import fastapi
-from models.item import Item, UpdatedItem
-from models.db import Items
+from app.models.item import Item, UpdatedItem
+from app.models.db import Items
 
 app = fastapi.FastAPI()
 
