@@ -1,7 +1,6 @@
 import fastapi
 from models.item import Item, UpdatedItem
-from models.db import Items, items_coll
-from typing import List, Optional
+from models.db import Items
 
 app = fastapi.FastAPI()
 
